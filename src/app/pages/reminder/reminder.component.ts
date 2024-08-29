@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './reminder.component.html',
-  styleUrl: './reminder.component.css'
+  styleUrl: './reminder.component.scss'
 })
 export class ReminderComponent {
 
