@@ -1,27 +1,35 @@
-# Reminders
+# Тестовое задание
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.0.
+## Запуск
 
-## Development server
+Запустите `ng serve` для сервера разработки. Перейдите к `http://localhost:4200/`.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+# Задание
 
-## Code scaffolding
+Задание выполняется с использованием TypeScript и Angular.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Необходимо реализовать приложение "Напоминания". В приложении должны быть
+предусмотрены следующие классы:
+1. Статус. Сущность имеет единственный атрибут "Наименование". Должны быть
+предусмотрены следующие статусы: "Новый", "Исполнен", "Запланирован", "Просрочен".
+2. Напоминание. Сущность имеет атрибут "Краткое описание", "Полное описание", "Дата и
+время создания", "Дата и время выполнения", "Статус".
 
-## Build
+В приложении должна быть реализована форма с таблицей, в которой отображается список
+напоминаний. Список напоминаний должен быть заполнен тестовыми данными (5-10 элементов).
+Должны быть выведены колонки: "Статус", Краткое описание", "Дата и время создания", "Дата и
+время выполнения".
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+При двойном клике по строке таблицы должна открываться форма напоминания
+(необходимо использовать роутинг). В форме напоминания в две колонки должны быть выведены
+следующие атрибуты. В первой строке формы: "Дата и время создания", "Дата и время
+выполнения", "Статус". Во второй строке на всю длину строки: "Краткое описание". В нижней части
+формы должно быть текстовое поле: "Полное описание". В форме напоминания должна быть кнопка
+«Назад» позволяющая перейти к таблице со всеми напоминаниями. Должна быть реализована
+возможность редактирования всех полей формы.
 
-## Running unit tests
+Приветствуется использование RxJS и Angular Material Design. Для TypeScript должен быть
+включен strict mode.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Результат необходимо выложить на codesandbox.io, а также записать видео работы
+приложения.
