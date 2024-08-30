@@ -1,6 +1,6 @@
 import { Status } from './status';
 
-class Reminder {
+export class Reminder {
   public creationDateTime: Date;
   constructor(
     public shortDescription: string,
