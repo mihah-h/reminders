@@ -15,7 +15,8 @@ import { Reminder } from '../../core/models/reminder';
 import { MatPaginator } from '@angular/material/paginator';
 import { DatePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
-import { MatFabButton, MatIconButton } from '@angular/material/button';
+import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
+import { StatusComponent } from './status/status.component';
 
 @Component({
   selector: 'app-reminder-list',
@@ -36,7 +37,9 @@ import { MatFabButton, MatIconButton } from '@angular/material/button';
     DatePipe,
     MatIcon,
     MatFabButton,
-    MatIconButton
+    MatIconButton,
+    MatButton,
+    StatusComponent
   ],
   templateUrl: './reminder-list.component.html',
   styleUrl: './reminder-list.component.scss'

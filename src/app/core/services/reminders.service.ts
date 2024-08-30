@@ -47,7 +47,7 @@ export class RemindersService {
       shortDescription: 'Записаться на прием',
       fullDescription: 'Записаться на прием к врачу',
       dueDateTime: new Date(2024, 3, 25, 10, 0),
-      status: new Status(STATUS_NAME.SCHEDULES),
+      status: new Status(STATUS_NAME.PLANNED),
       creationDateTime: new Date(2024, 3, 23, 14, 15),
     },
     {

@@ -1,0 +1,17 @@
+:host {
+  &.new {
+    color: var(--status-new);
+  }
+
+  &.completed {
+    color: var(--status-completed);
+  }
+
+  &.planned {
+    color: var(--status-planned);
+  }
+
+  &.expired {
+    color: var(--status-expired);
+  }
+}
