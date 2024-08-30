@@ -8,55 +8,62 @@ import { STATUS_NAME } from '../models/status-name';
 })
 export class RemindersService {
   private reminders: Reminder[] = [
-    {
-      shortDescription: 'Купить молоко',
-      fullDescription: 'Купить 1 литр молока в магазине на углу',
-      dueDateTime: new Date(2024, 3, 15, 18, 0),
-      status: new Status(STATUS_NAME.COMPLETED),
-      creationDateTime: new Date(2023, 11, 12, 10, 15),
-    },
-    {
-      shortDescription: 'Заплатить за интернет',
-      fullDescription: 'Оплатить счет за интернет до 15 апреля',
-      dueDateTime: new Date(2024, 3, 15, 23, 59),
-      status: new Status(STATUS_NAME.EXPIRED),
-      creationDateTime: new Date(2023, 10, 19, 15, 30),
-    },
-    {
-      shortDescription: 'Встретиться с другом',
-      fullDescription: 'Встреча с другом в кафе "Кофемания" в 19:00',
-      dueDateTime: new Date(2024, 3, 18, 19, 0),
-      status: new Status(STATUS_NAME.COMPLETED),
-      creationDateTime: new Date(2024, 2, 10, 12, 45),
-    },
-    {
-      shortDescription: 'Позвонить родителям',
-      fullDescription: 'Позвонить родителям и поздравить с днем рождения',
-      dueDateTime: new Date(2024, 3, 20, 12, 0),
-      status: new Status(STATUS_NAME.COMPLETED),
-      creationDateTime: new Date(2024, 1, 15, 11, 0),
-    },
-    {
-      shortDescription: 'Сдать отчет',
-      fullDescription: 'Сдать отчет по проекту "Аналитика" до конца недели',
-      dueDateTime: new Date(2024, 3, 22, 23, 59),
-      status: new Status(STATUS_NAME.NEW),
-      creationDateTime: new Date(2024, 3, 10, 9, 30),
-    },
-    {
-      shortDescription: 'Записаться на прием',
-      fullDescription: 'Записаться на прием к врачу',
-      dueDateTime: new Date(2024, 3, 25, 10, 0),
-      status: new Status(STATUS_NAME.PLANNED),
-      creationDateTime: new Date(2024, 3, 23, 14, 15),
-    },
-    {
-      shortDescription: 'Купить билеты на концерт',
-      fullDescription: 'Купить билеты на концерт любимой группы',
-      dueDateTime: new Date(2024, 4, 5, 20, 0),
-      status: new Status(STATUS_NAME.NEW),
-      creationDateTime: new Date(2024, 2, 25, 16, 0),
-    },
+    new Reminder(
+      'Позвонить родителям',
+      'Позвонить родителям, узнать как дела и поздравить с днем рождения',
+      new Date(2023, 11, 20, 10, 0, 0),
+      new Date(2023, 11, 20, 18, 0, 0),
+      new Status(STATUS_NAME.EXPIRED)
+    ),
+    new Reminder(
+      'Купить продукты',
+      'Купить продукты в магазине напротив дома: хлеб, молоко, яйца, сыр',
+      new Date(2023, 11, 21, 12, 0, 0),
+      new Date(2023, 11, 21, 14, 0, 0),
+      new Status(STATUS_NAME.COMPLETED)
+    ),
+    new Reminder(
+      'Встретиться с другом',
+      'Встретиться с другом в кафе напротив парка, обсудить планы на выходные',
+      new Date(2023, 11, 22, 16, 0, 0),
+      new Date(2023, 11, 22, 18, 0, 0),
+      new Status(STATUS_NAME.COMPLETED)
+    ),
+    new Reminder(
+      'Записаться на курсы',
+      'Записаться на курсы английского языка, изучить расписание и стоимость',
+      new Date(2023, 11, 23, 10, 0, 0),
+      new Date(2023, 11, 23, 12, 0, 0),
+      new Status(STATUS_NAME.COMPLETED)
+    ),
+    new Reminder(
+      'Починить велосипед',
+      'Отвезти велосипед в мастерскую, заменить покрышку и проверить тормоза',
+      new Date(2023, 11, 24, 14, 0, 0),
+      new Date(2023, 11, 24, 16, 0, 0),
+      new Status(STATUS_NAME.NEW)
+    ),
+    new Reminder(
+      'Сходить в кино',
+      'Сходить в кино с девушкой, посмотреть новый фильм, купить попкорн',
+      new Date(2023, 11, 25, 18, 0, 0),
+      new Date(2023, 11, 25, 20, 0, 0),
+      new Status(STATUS_NAME.PLANNED)
+    ),
+    new Reminder(
+      'Заплатить за интернет',
+      'Оплатить счет за интернет, проверить баланс и продлить подписку',
+      new Date(2023, 11, 26, 10, 0, 0),
+      new Date(2023, 11, 26, 12, 0, 0),
+      new Status(STATUS_NAME.PLANNED)
+    ),
+    new Reminder(
+      'Проверить почту',
+      'Проверить почту, ответить на письма и удалить спам',
+      new Date(2023, 11, 27, 14, 0, 0),
+      new Date(2023, 11, 27, 16, 0, 0),
+      new Status(STATUS_NAME.NEW)
+    ),
   ];
 
   constructor() {}
@@ -69,10 +76,6 @@ export class RemindersService {
     return this.reminders[index];
   }
 
-  createReminder(shortDescription: string, fullDescription: string, dueDateTime: Date, status: Status) {
-    this.reminders.push(new Reminder(shortDescription, fullDescription, dueDateTime, status));
-  }
-
   updateReminder(index: number, updatedReminder: Reminder): Reminder | undefined {
     const reminder = this.getReminder(index);
     if (reminder) {
@@ -80,12 +83,5 @@ export class RemindersService {
       return reminder;
     }
     return undefined;
-  }
-
-  deleteReminder(index: number) {
-    const reminder = this.getReminder(index);
-    if (reminder) {
-      this.reminders.splice(index, 1);
-    }
   }
 }

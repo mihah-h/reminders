@@ -1,6 +1,6 @@
 export enum STATUS_NAME {
-  NEW = "новый",
-  COMPLETED = "исполнен",
-  PLANNED = "запланирован",
-  EXPIRED = "просрочен",
+  NEW = "Новый",
+  COMPLETED = "Исполнен",
+  PLANNED = "Запланирован",
+  EXPIRED = "Просрочен",
 }

@@ -45,7 +45,7 @@ import { StatusComponent } from './status/status.component';
   styleUrl: './reminder-list.component.scss'
 })
 export class ReminderListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['shortDescription', 'creationDateTime', 'dueDateTime', 'status', 'delete'];
+  displayedColumns: string[] = ['shortDescription', 'creationDateTime', 'dueDateTime', 'status'];
   reminders: Reminder[] = [];
   dataSource!: MatTableDataSource<Reminder> ;
 
