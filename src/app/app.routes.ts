@@ -7,7 +7,7 @@ export const routes: Routes = [
       import('./pages/reminder-list/reminder-list.component').then((x) => x.ReminderListComponent),
   },
   {
-    path: 'reminder/:id',
+    path: 'reminder/:index',
     loadComponent: () =>
       import('./pages/reminder/reminder.component').then((x) => x.ReminderComponent),
   },

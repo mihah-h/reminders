@@ -72,16 +72,13 @@ export class RemindersService {
     return this.reminders;
   }
 
-  getReminder(index: number): Reminder | undefined {
+  getReminder(index: number): Reminder {
     return this.reminders[index];
   }
 
-  updateReminder(index: number, updatedReminder: Reminder): Reminder | undefined {
+  updateReminder(index: number, updatedReminder: Reminder): Reminder {
     const reminder = this.getReminder(index);
-    if (reminder) {
-      Object.assign(reminder, updatedReminder);
-      return reminder;
-    }
-    return undefined;
+    Object.assign(reminder, updatedReminder);
+    return reminder;
   }
 }

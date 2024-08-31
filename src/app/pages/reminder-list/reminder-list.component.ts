@@ -17,6 +17,7 @@ import { DatePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
 import { StatusComponent } from './status/status.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reminder-list',
@@ -52,6 +53,7 @@ export class ReminderListComponent implements OnInit, AfterViewInit {
   constructor(
     public remindersService: RemindersService,
     private _liveAnnouncer: LiveAnnouncer,
+    private _router: Router,
   ) {}
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -71,5 +73,10 @@ export class ReminderListComponent implements OnInit, AfterViewInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  goToReminderPage(reminder: Reminder) {
+    const reminderIndex = this.reminders.indexOf(reminder);
+    this._router.navigate(['/reminder', reminderIndex])
   }
 }
