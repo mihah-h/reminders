@@ -1,53 +1,33 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import {
-  MatCell, MatCellDef,
-  MatColumnDef,
-  MatHeaderCell, MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow, MatRowDef,
-  MatTable, MatTableDataSource
-} from '@angular/material/table';
-import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
+
 import { RemindersService } from '../../core/services/reminders.service';
 import { Reminder } from '../../core/models/reminder.class';
-import { DatePipe } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
-import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
 import { StatusComponent } from './status/status.component';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reminder-list',
   standalone: true,
   imports: [
-    MatTable,
-    MatColumnDef,
-    MatCell,
-    MatHeaderCell,
-    MatHeaderRowDef,
-    MatRow,
-    MatHeaderRow,
-    MatRowDef,
-    MatCellDef,
-    MatHeaderCellDef,
-    MatSortHeader,
-    MatSort,
-    DatePipe,
-    MatIcon,
-    MatFabButton,
-    MatIconButton,
-    MatButton,
-    StatusComponent
+    MatTableModule,
+    MatSortModule,
+    StatusComponent,
+    DatePipe
   ],
   templateUrl: './reminder-list.component.html',
   styleUrl: './reminder-list.component.scss'
 })
 export class ReminderListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['shortDescription', 'creationDateTime', 'dueDateTime', 'status'];
-  reminders: Reminder[] = [];
-  dataSource!: MatTableDataSource<Reminder> ;
+  public displayedColumns: string[] = ['shortDescription', 'creationDateTime', 'dueDateTime', 'status'];
+  public dataSourceReminders!: MatTableDataSource<Reminder> ;
+
+  private _reminders: Reminder[] = [];
+
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     public remindersService: RemindersService,
@@ -55,27 +35,25 @@ export class ReminderListComponent implements OnInit, AfterViewInit {
     private _router: Router,
   ) {}
 
-  @ViewChild(MatSort) sort!: MatSort;
-
   ngOnInit() {
-    this.reminders = this.remindersService.getReminders();
-    this.dataSource = new MatTableDataSource(this.reminders);
+    this._reminders = this.remindersService.getReminders();
+    this.dataSourceReminders = new MatTableDataSource(this._reminders);
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+    this.dataSourceReminders.sort = this.sort;
   }
 
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`).then();
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
-      this._liveAnnouncer.announce('Sorting cleared').then();
+      this._liveAnnouncer.announce('Sorting cleared');
     }
   }
 
   goToReminderPage(reminder: Reminder) {
-    const reminderIndex = this.reminders.indexOf(reminder);
-    this._router.navigate(['/reminder', reminderIndex]).then();
+    const reminderIndex = this._reminders.indexOf(reminder);
+    this._router.navigate(['/reminder', reminderIndex]);
   }
 }

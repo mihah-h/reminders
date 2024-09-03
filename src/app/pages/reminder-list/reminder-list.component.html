@@ -1,5 +1,5 @@
 <h1 class="title">Список напоминаний</h1>
-<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+<table mat-table [dataSource]="dataSourceReminders" matSort (matSortChange)="announceSortChange($event)"
        class="mat-elevation-z8">
   <ng-container matColumnDef="shortDescription">
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by short description">

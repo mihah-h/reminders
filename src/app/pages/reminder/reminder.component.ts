@@ -6,13 +6,10 @@ import { StatusService } from '../../core/services/status.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RemindersService } from '../../core/services/reminders.service';
 
-import { MAT_DATE_LOCALE, MatOption, provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatOption } from '@angular/material/core';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import {
   MatDatepickerModule,
-  MatDatepickerToggle,
-  MatDateRangeInput,
-  MatDateRangePicker
 } from '@angular/material/datepicker';
 import { MatSelect } from '@angular/material/select';
 import { MatInput, MatInputModule } from '@angular/material/input';
