@@ -1,28 +1,33 @@
 import { Component } from '@angular/core';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { MatFormField, MatFormFieldModule, MatHint, MatLabel } from '@angular/material/form-field';
-import { MatDatepicker, MatDatepickerModule, MatDatepickerToggle } from '@angular/material/datepicker';
-import { MatInput, MatInputModule } from '@angular/material/input';
-import { MatOption, provideNativeDateAdapter } from '@angular/material/core';
-import { MatSelect } from '@angular/material/select';
-import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Reminder } from '../../core/models/reminder.class';
 import { map, Observable } from 'rxjs';
-import { Reminder } from '../../core/models/reminder';
+import { StatusService } from '../../core/services/status.service';
+import { ActivatedRoute } from '@angular/router';
 import { RemindersService } from '../../core/services/reminders.service';
-import { FormControl, FormGroup } from '@angular/forms';
 
-interface Food {
-  value: string;
-  viewValue: string;
-}
-
+import { MAT_DATE_LOCALE, MatOption, provideNativeDateAdapter } from '@angular/material/core';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import {
+  MatDatepickerModule,
+  MatDatepickerToggle,
+  MatDateRangeInput,
+  MatDateRangePicker
+} from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-reminder',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'ru-GB'},
+    StatusService,
+    provideNativeDateAdapter()
+  ],
   imports: [
-    MatFormFieldModule, MatInputModule, MatDatepickerModule, MatSelect, MatOption
+    MatFormFieldModule, MatDatepickerModule, MatSelect, MatOption, ReactiveFormsModule, MatInput, MatButton,
   ],
   templateUrl: './reminder.component.html',
   styleUrl: './reminder.component.scss'
@@ -33,11 +38,10 @@ export class ReminderComponent {
   myForm!: FormGroup;
 
   constructor(
+    public statusService: StatusService,
     private _remindersService: RemindersService,
     private _activatedRoute: ActivatedRoute,
-  ) {
-  }
-
+  ) {}
 
   public ngOnInit(): void {
     this.reminder$ = this._activatedRoute.params
@@ -50,12 +54,18 @@ export class ReminderComponent {
       )
 
     this.reminder$.subscribe((reminder) => {
-      this.myForm = new FormGroup({
-
-        userName: new FormControl(reminder?.creationDateTime),
-        userEmail: new FormControl("" ),
-      });
+      if (reminder) {
+        this.myForm = new FormGroup({
+          shortDescription: new FormControl(reminder.shortDescription),
+          fullDescription: new FormControl(reminder.fullDescription),
+          creationDateTime: new FormControl(reminder.creationDateTime),
+          dueDateTime: new FormControl(reminder.dueDateTime),
+          status: new FormControl(reminder.status.name),
+        });
+        console.log(this.myForm)
+      }
     })
-
   }
+
+
 }

@@ -1,10 +1,7 @@
 .card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   padding: 20px 16px;
-
-  & .inputs-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 textarea::-webkit-resizer {

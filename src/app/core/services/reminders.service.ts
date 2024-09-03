@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Reminder } from '../models/reminder';
-import { Status } from '../models/status';
-import { STATUS_NAME } from '../models/status-name';
+import { Reminder } from '../models/reminder.class';
+import { Status } from '../models/status.class';
+import { STATUS_NAME } from '../models/status-name.enum';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class RemindersService {
   private reminders: Reminder[] = [
     new Reminder(
@@ -72,13 +70,17 @@ export class RemindersService {
     return this.reminders;
   }
 
-  getReminder(index: number): Reminder {
+  getReminder(index: number): Reminder | undefined {
     return this.reminders[index];
   }
 
-  updateReminder(index: number, updatedReminder: Reminder): Reminder {
+  updateReminder(index: number, updatedReminder: Reminder): Reminder | undefined
+  {
     const reminder = this.getReminder(index);
-    Object.assign(reminder, updatedReminder);
-    return reminder;
+    if (reminder) {
+      Object.assign(reminder, updatedReminder);
+      return reminder;
+    }
+    return undefined;
   }
 }

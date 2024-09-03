@@ -11,8 +11,7 @@ import {
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { RemindersService } from '../../core/services/reminders.service';
-import { Reminder } from '../../core/models/reminder';
-import { MatPaginator } from '@angular/material/paginator';
+import { Reminder } from '../../core/models/reminder.class';
 import { DatePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';

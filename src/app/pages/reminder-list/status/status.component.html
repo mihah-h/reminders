@@ -1,1 +1,16 @@
-<span> {{statusName}} </span>
+<span>
+@switch (statusName) {
+  @case ('new') {
+    Новый
+  }
+  @case ('completed') {
+   Исполнен
+  }
+  @case ('planned') {
+    Запланирован
+  }
+  @case ('expired') {
+    Просрочен
+  }
+}
+</span>
