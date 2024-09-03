@@ -1,17 +1,49 @@
+<button class="button-back" mat-icon-button aria-label="Example icon button with a vertical three dot icon" (click)="goReminderListPage()">
+  <mat-icon>navigate_before</mat-icon>
+</button>
+<h1 class="title">Напоминание</h1>
 <form class="card mat-elevation-z8" [formGroup]="myForm">
-  <mat-form-field>
-    <mat-label>Choose a date</mat-label>
-    <input formControlName="creationDateTime" matInput [matDatepicker]="picker">
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <mat-label>Favorite food</mat-label>
-    <input formControlName="shortDescription" matInput placeholder="Ex. Pizza" value="Sushi">
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <mat-label>Leave a comment</mat-label>
-    <textarea formControlName="fullDescription" matInput placeholder="Ex. It makes me feel..."></textarea>
-  </mat-form-field>
-  <button mat-flat-button color="primary">Primary</button>
+  <div class="inputs-container">
+    <mat-form-field class="creation-date">
+      <mat-label>Дата и время создания</mat-label>
+      <mtx-datetimepicker #creationDateTime mode="portrait" />
+      <input
+        formControlName="creationDateTime"
+        [mtxDatetimepicker]="creationDateTime"
+        matInput
+        placeholder="ДД.ММ.ГГГГ, ЧЧ:мм"
+      >
+      <mtx-datetimepicker-toggle [for]="creationDateTime" matSuffix />
+    </mat-form-field>
+    <mat-form-field class="due-date">
+      <mat-label>Дата и время выполнения</mat-label>
+      <mtx-datetimepicker #dueDateTime mode="portrait" />
+      <input
+        formControlName="dueDateTime"
+        [mtxDatetimepicker]="dueDateTime"
+        matInput
+        placeholder="ДД.ММ.ГГГГ, ЧЧ:мм"
+      >
+      <mtx-datetimepicker-toggle [for]="dueDateTime" matSuffix />
+    </mat-form-field>
+    <mat-form-field class="status">
+      <mat-label>Статус</mat-label>
+      <mat-select formControlName="status">
+        @for (statusNameForSelect of statusService.statusNamesForSelect; track statusNameForSelect.value) {
+          <mat-option [value]="statusNameForSelect.value"> {{statusNameForSelect.viewValue}} </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="short-description">
+      <mat-label>Краткое описание</mat-label>
+      <input formControlName="shortDescription" matInput placeholder="Введите краткое описание">
+    </mat-form-field>
+    <mat-form-field class="full-description">
+      <mat-label>Полное описание</mat-label>
+      <textarea formControlName="fullDescription" matInput placeholder="Введие полное описание"></textarea>
+    </mat-form-field>
+  </div>
+  <div class="save-button-container">
+    <button class="button-container" mat-flat-button color="primary">Сохранить</button>
+  </div>
 </form>

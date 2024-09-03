@@ -1,9 +1,71 @@
+.button-back {
+  position: fixed;
+  color: var(--color-light-gray);
+  top: 34px;
+  left: 70px;
+  z-index: 9999;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 500;
+  margin-top: 40px;
+  margin-bottom: 24px;
+}
+
 .card {
+  padding: 30px 24px;
+
+  & .save-button-container {
+    display: flex;
+    justify-content: flex-end;
+
+    & .button-container {
+      height: 44px;
+    }
+  }
+}
+
+.inputs-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 20px 16px;
+  grid-template-areas:
+    "creation-date due-date status"
+    "short-description short-description short-description"
+    "full-description full-description full-description"
+  ;
+  column-gap: 12px;
+
+  & .creation-date {
+    grid-area: creation-date;
+  }
+
+  & .due-date {
+    grid-area: due-date;
+  }
+
+  & .status {
+    grid-area: status;
+  }
+
+  & .short-description {
+    grid-area: short-description;
+  }
+
+  & .full-description {
+    grid-area: full-description;
+
+    & textarea {
+      height: 120px;
+    }
+  }
 }
 
 textarea::-webkit-resizer {
   display: none;
 }
+
+.mat-mdc-form-field-subscript-wrapper {
+  visibility: hidden;
+}
+

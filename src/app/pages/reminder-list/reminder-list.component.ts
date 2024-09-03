@@ -68,14 +68,14 @@ export class ReminderListComponent implements OnInit, AfterViewInit {
 
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`).then();
     } else {
-      this._liveAnnouncer.announce('Sorting cleared');
+      this._liveAnnouncer.announce('Sorting cleared').then();
     }
   }
 
   goToReminderPage(reminder: Reminder) {
     const reminderIndex = this.reminders.indexOf(reminder);
-    this._router.navigate(['/reminder', reminderIndex])
+    this._router.navigate(['/reminder', reminderIndex]).then();
   }
 }

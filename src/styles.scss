@@ -1,4 +1,9 @@
 @import "./app/pages/reminder-list/status/status.colors";
 
-html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mtx-calendar {
+  background-color: #FFF;
+  border-radius: 4px;
+  box-shadow: 0 2px 22px 1px rgba(0, 0, 0, 0.32);
+}
