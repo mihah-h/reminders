@@ -2,12 +2,12 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
+import { StatusComponent } from './status/status.component';
 import { RemindersService } from '../../core/services/reminders.service';
 import { Reminder } from '../../core/models/reminder.class';
-import { StatusComponent } from './status/status.component';
 
 @Component({
   selector: 'app-reminder-list',
@@ -19,11 +19,11 @@ import { StatusComponent } from './status/status.component';
     DatePipe
   ],
   templateUrl: './reminder-list.component.html',
-  styleUrl: './reminder-list.component.scss'
+  styleUrl: './reminder-list.component.scss',
 })
 export class ReminderListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['shortDescription', 'creationDateTime', 'dueDateTime', 'status'];
-  public dataSourceReminders!: MatTableDataSource<Reminder> ;
+  public dataSourceReminders!: MatTableDataSource<Reminder>;
 
   private _reminders: Reminder[] = [];
 

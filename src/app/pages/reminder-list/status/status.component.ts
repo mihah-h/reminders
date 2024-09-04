@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+
 import { STATUS_NAME } from '../../../core/models/status-name.enum';
 
 @Component({

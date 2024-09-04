@@ -1,37 +1,25 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Reminder } from '../../core/models/reminder.class';
-import { map, Observable } from 'rxjs';
-import { StatusService } from '../../core/services/status.service';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RemindersService } from '../../core/services/reminders.service';
-
-import { MAT_DATE_LOCALE, MatOption } from '@angular/material/core';
-import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
-import {
-  MatDatepickerModule,
-} from '@angular/material/datepicker';
-import { MatSelect } from '@angular/material/select';
-import { MatInput, MatInputModule } from '@angular/material/input';
-import { MatButton, MatButtonModule } from '@angular/material/button';
-import {
-  MtxDatetimepicker,
-  MtxDatetimepickerModule,
-  MtxDatetimepickerToggle
-} from '@ng-matero/extensions/datetimepicker';
-import { MtxNativeDatetimeModule } from '@ng-matero/extensions/core';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSliderModule } from '@angular/material/slider';
-import { provideMomentDatetimeAdapter } from '@ng-matero/extensions-moment-adapter';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { MtxDatetimepickerModule, } from '@ng-matero/extensions/datetimepicker';
+import { provideMomentDatetimeAdapter } from '@ng-matero/extensions-moment-adapter';
+import { map } from 'rxjs';
+
+import { RemindersService } from '../../core/services/reminders.service';
+import { StatusService } from '../../core/services/status.service';
+import { Reminder } from '../../core/models/reminder.class';
+import { Status } from '../../core/models/status.class';
 
 
 @Component({
   selector: 'app-reminder',
   standalone: true,
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'ru'},
     StatusService,
     provideMomentDatetimeAdapter({
       parse: {
@@ -51,25 +39,22 @@ import { MatIcon } from '@angular/material/icon';
     },  ),
   ],
   imports: [
-    MatFormFieldModule, MatDatepickerModule, MatSelect, MatOption,
-    ReactiveFormsModule, MatInput, MatButton, MtxDatetimepicker, MtxDatetimepickerToggle,
-    MtxNativeDatetimeModule,
-    FormsModule,
-    MatRadioModule,
-    MatCheckboxModule,
-    MatSliderModule,
-    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatSelectModule,
     MatInputModule,
     MatButtonModule,
-    MtxDatetimepickerModule, MatIcon,
+    MtxDatetimepickerModule,
+    MatIcon,
   ],
   templateUrl: './reminder.component.html',
-  styleUrl: './reminder.component.scss'
+  styleUrl: './reminder.component.scss',
 })
-export class ReminderComponent {
-  public reminder: Reminder | undefined;
-  public reminder$!: Observable<Reminder | undefined>;
-  myForm!: FormGroup;
+export class ReminderComponent implements OnInit {
+  public reminderForm!: FormGroup;
+
+  private reminderIndex!: number;
+
+  private _destroyRef = inject(DestroyRef);
 
   constructor(
     public statusService: StatusService,
@@ -79,30 +64,50 @@ export class ReminderComponent {
   ) {}
 
   public ngOnInit(): void {
-    this.reminder$ = this._activatedRoute.params
+    this._activatedRoute.params
       .pipe(
         map((params) => {
-          const reminderIndex = params['index'];
-          console.log(reminderIndex);
-          return this._remindersService.getReminder(reminderIndex);
+          this.reminderIndex = params['index'];
+          return this._remindersService.getReminder(this.reminderIndex);
         }),
-      )
-
-    this.reminder$.subscribe((reminder) => {
-      if (reminder) {
-        this.myForm = new FormGroup({
-          shortDescription: new FormControl(reminder.shortDescription),
-          fullDescription: new FormControl(reminder.fullDescription),
-          creationDateTime: new FormControl(reminder.creationDateTime),
-          dueDateTime: new FormControl(reminder.dueDateTime),
-          status: new FormControl(reminder.status.name),
-        });
-        console.log(this.myForm)
-      }
+        takeUntilDestroyed(this._destroyRef),
+      ).subscribe((reminder) => {
+        this.createReminderForm(reminder);
     })
   }
 
+  createReminderForm(reminder: Reminder | undefined) {
+    if (reminder) {
+      this.reminderForm = new FormGroup({
+        shortDescription: new FormControl(reminder.shortDescription, Validators.required),
+        fullDescription: new FormControl(reminder.fullDescription),
+        creationDateTime: new FormControl(reminder.creationDateTime, Validators.required),
+        dueDateTime: new FormControl(reminder.dueDateTime),
+        status: new FormControl(reminder.status.name),
+      });
+    }
+  }
+
   public goReminderListPage() {
-    this._router.navigate(['']).then()
+    this._router.navigate(['']).then(() => {
+      this.reminderForm.reset();
+    });
+  }
+
+  public save() {
+    const reminderFormValue = this.reminderForm.value;
+
+    const updatedReminder = new Reminder(
+      reminderFormValue.shortDescription,
+      reminderFormValue.fullDescription,
+      reminderFormValue.creationDateTime,
+      reminderFormValue.dueDateTime,
+      new Status(reminderFormValue.status),
+    );
+
+    this._remindersService.updateReminder(this.reminderIndex, updatedReminder);
+    this._router.navigate(['']).then(() => {
+      this.reminderForm.reset();
+    });
   }
 }

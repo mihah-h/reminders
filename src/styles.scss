@@ -3,7 +3,11 @@
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mtx-calendar {
-  background-color: #FFF;
+  background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 2px 22px 1px rgba(0, 0, 0, 0.32);
+}
+
+.mtx-clock-cell.mtx-clock-cell-selected.ng-star-inserted {
+  color: #673ab7;
 }
