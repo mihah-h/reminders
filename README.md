@@ -4,6 +4,14 @@
 
 Запустите `ng serve` для сервера разработки. Перейдите к `http://localhost:4200/`.
 
+## Видео
+
+https://github.com/user-attachments/assets/f44a6930-56b8-461e-8cd5-e7179c2a05f2
+
+## Codesandbox
+
+https://codesandbox.io/p/github/mihah-h/reminders/main
+
 # Задание
 
 Задание выполняется с использованием TypeScript и Angular.
