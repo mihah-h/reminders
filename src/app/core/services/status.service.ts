@@ -5,8 +5,8 @@ import { StatusNameForSelect } from '../models/status-name-for-select.interface'
 export class StatusService {
   public readonly statusNamesForSelect: StatusNameForSelect[] = [
     {value: 'new', viewValue: 'Новый'},
-    {value: 'completed', viewValue: 'Исполнен'},
     {value: 'planned', viewValue: 'Запланирован'},
+    {value: 'completed', viewValue: 'Исполнен'},
     {value: 'expired', viewValue: 'Просрочен'},
   ];
 
